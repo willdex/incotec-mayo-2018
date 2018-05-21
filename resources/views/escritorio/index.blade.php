@@ -133,7 +133,7 @@
                           <h3>{{$res2->cant}}</h3>
                         @endforeach
                       <p style="font-size: 18px;">Activas-Parciales</p>
-                    </div>
+                    </div> 
 
                     <div class="icon">
                       <i class="fa fa-file-text-o" aria-hidden="true"></i>
@@ -172,7 +172,7 @@
                   @include('alerts.success')
                   @include('alerts.errors')
 
-                <?php  $sql = DB::select('select nombre, idpublic, titulo, descripcion, DATE_FORMAT(fecha,"%d-%m-%Y") AS fecha, estado FROM categoria, convocatoria WHERE categoria.idcat=convocatoria.idcat and convocatoria.estado<>"inactiva" Order by fecha desc LIMIT 7'); ?>
+                <?php  $sql = DB::select('select nombre, idpublic, titulo, descripcion,fecha, estado FROM categoria, convocatoria WHERE categoria.idcat=convocatoria.idcat and convocatoria.estado<>"inactiva" ORDER BY fecha DESC LIMIT 7'); ?>
 
                   <div>
                     <h3> Últimas Convocatorias </h3> 

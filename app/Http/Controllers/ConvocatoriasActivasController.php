@@ -25,39 +25,98 @@ class ConvocatoriasActivasController extends Controller {
         
     }
   
-    function index() {  
+    function index(Request $request) {  
+       if($request){
+             $query1=trim($request->get('searchText'));
+             $query2=trim($request->get('searchText2'));
+             $query3=trim($request->get('searchText3'));
+             $query4=trim($request->get('searchText4'));
+            if(Auth::user()->privilegio==0)
+            {
 
-        if(Auth::user()->privilegio==0)
-        {
-
-            $sql=DB::table('prov_cat')
-            ->join('categoria','prov_cat.idcat','=','categoria.idcat')
-            ->join('convocatoria','categoria.idcat','=','convocatoria.idcat')
-            ->select('nombre','idpublic','titulo','descripcion','fecha','estado')
-            ->where('prov_cat.id','=',Auth::user()->id)
-            ->where('convocatoria.estado','<>','inactiva')
-            ->orderBy('fecha', 'desc')
-            ->paginate(10);  
-
-            return view('convocatoriasactivas.index',['sql'=>$sql]);  
-
-        }
-        elseif ((Auth::user()->privilegio==1)||(Auth::user()->privilegio==2)) {
-
-            $sqlAdm=DB::table('prov_cat')
-            ->join('categoria','prov_cat.idcat','=','categoria.idcat')
-            ->join('convocatoria','categoria.idcat','=','convocatoria.idcat')
-            ->select('nombre','idpublic','titulo','descripcion','fecha','estado')
-            ->where('prov_cat.id','=',Auth::user()->id)
-            ->where('convocatoria.estado','=','activa')
-            ->orderBy('fecha', 'desc')
-            ->paginate(10);  
-
-            return view('convocatoriasactivas.index',['sqlAdm'=>$sqlAdm]); 
-        }   
+                $sql=DB::table('prov_cat')
+                ->join('categoria','prov_cat.idcat','=','categoria.idcat')
+                ->join('convocatoria','categoria.idcat','=','convocatoria.idcat')
+                ->select('nombre','idpublic','titulo','descripcion','fecha','estado')
+                ->where('prov_cat.id','=',Auth::user()->id)
+                ->where('convocatoria.estado','<>','inactiva')
                 
-    }
+                ->orderBy('fecha', 'desc')
+                ->paginate(10);  
 
+                return view('convocatoriasactivas.index',['sql'=>$sql]);  
+
+            }
+            elseif ((Auth::user()->privilegio==1)||(Auth::user()->privilegio==2)) {
+               
+                    if($query1<>""){
+
+                        $sqlAdm=DB::table('convocatoria')
+                        ->join('categoria','convocatoria.idcat','=','categoria.idcat')
+                      
+                        ->select('nombre','idpublic','titulo','descripcion','fecha','estado')
+                      
+                        ->where('convocatoria.estado','<>','inactiva')
+                        ->where('titulo','LIKE','%'.$query1.'%')
+                  
+                        ->orderBy('fecha', 'desc')
+                        ->paginate(10);
+                        $prub="";  
+                             $fech= ""; 
+
+                    return view('convocatoriasactivas.index',['sqlAdm'=>$sqlAdm,"searchText"=>$query1,"searchText2"=>$prub,"searchText3"=>$fech,"searchText4"=>$fech]); 
+                    }
+                    else{
+                        if ($query2<>"") {
+                            $sqlAdm=DB::table('convocatoria')
+                            ->join('categoria','convocatoria.idcat','=','categoria.idcat')
+                          
+                            ->select('nombre','idpublic','titulo','descripcion','fecha','estado')
+                          
+                            ->where('convocatoria.estado','<>','inactiva')
+                            ->where('nombre','LIKE','%'.$query2.'%')
+                      
+                            ->orderBy('fecha', 'desc')
+                            ->paginate(10);
+                            $prub="";
+                                 $fech= ""; 
+                            return view('convocatoriasactivas.index',['sqlAdm'=>$sqlAdm,"searchText"=>$prub,"searchText2"=>$query2,"searchText3"=>$fech,"searchText4"=>$fech]); 
+                        }
+                        elseif($query3<>NULL && $query4<>NULL){
+                            $sqlAdm=DB::table('convocatoria')
+                            ->join('categoria','convocatoria.idcat','=','categoria.idcat')
+                          
+                            ->select('nombre','idpublic','titulo','descripcion','fecha','estado')
+                          
+                            ->where('convocatoria.estado','<>','inactiva')
+                             ->whereBetween('fecha', [$query3, $query4])
+                      
+                            ->orderBy('fecha', 'desc')
+                            ->paginate(10);
+                            $prub="";
+                            $fech= ""; 
+                            return view('convocatoriasactivas.index',['sqlAdm'=>$sqlAdm,"searchText"=>$prub,"searchText2"=>$prub,"searchText3"=>$query3,"searchText4"=>$query4]);   
+                        }else{
+                            $sqlAdm=DB::table('convocatoria')
+                            ->join('categoria','convocatoria.idcat','=','categoria.idcat')
+                          
+                            ->select('nombre','idpublic','titulo','descripcion','fecha','estado')
+                          
+                            ->where('convocatoria.estado','<>','inactiva')
+                            
+                      
+                            ->orderBy('fecha', 'desc')
+                            ->paginate(10);
+                            $prub="";
+                            $fech= ""; 
+                            return view('convocatoriasactivas.index',['sqlAdm'=>$sqlAdm,"searchText"=>$prub,"searchText2"=>$prub,"searchText3"=>$fech,"searchText4"=>$fech]);     
+                        }
+                    }
+                }
+                
+        }        
+    }
+ 
 
     function parciales() {
 

@@ -40,7 +40,7 @@ Route::resource('proveedores','ProveedoresController');
 
 
 
-
+ 
 
 //--registrar proveedor ruta para REGISTRO DE PROVEEDORES 15-02-18 !!Daniel Alanis
 Route::resource('registrosproveedor','RegistrosProveedorController');
@@ -55,6 +55,7 @@ Route::post('registrosproveedor/updatepassword','RegistrosProveedorController@up
 
 Route::post('adjuntarcategoria','RegistrosProveedorController@adjuntar_categoria');
 
+Route::resource('consultar','ConsultarController'); 
 
 //* adjuntar archivos willians d.
 

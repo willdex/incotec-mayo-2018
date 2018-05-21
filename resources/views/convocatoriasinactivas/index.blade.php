@@ -53,7 +53,16 @@
 
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
       <div class="table-responsive" style="overflow-x:inherit">
-
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-striped table-bordered table-condensed table-hover" style="background: white">
+        <thead>
+            <th style="font-size: 16px;"><center>@include('convocatoriasinactivas.search')</center></th>
+                  <th style="font-size: 16px;"><center>@include('convocatoriasinactivas.search2')</center></th>
+                  <th style="font-size: 16px;"><center>@include('convocatoriasinactivas.search3')</center></th>
+        
+        </thead>
+        </table>
+     </div>
 
       <table class="table table-striped table-bordered table-condensed table-hover" style="background: white">
           <thead>

@@ -43,6 +43,7 @@
 
       </div>
   <button class='btn btn-primary' style="font-size: 14px; background-color: green;" data-toggle="modal" data-target="#modalAcceso" >Enviar Acceso</button>
+   <a href="consultar"><button class='btn btn-primary' style="font-size: 14px; " >Consultar</button>
     </div>
   </div>
 
